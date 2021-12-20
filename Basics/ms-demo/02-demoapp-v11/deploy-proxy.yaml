@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proxy
+  template:
+    metadata:
+      labels:
+        app: proxy
+    spec:
+      containers:
+        - env:
+          - name: PROXYURL
+            value: http://demoapp:8080
+          image: ikubernetes/proxy:v0.1.1
+          imagePullPolicy: IfNotPresent
+          name: proxy
+          ports:
+            - containerPort: 8080
+              name: web
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 50m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy
+spec:
+  ports:
+    - name: http-80
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: proxy
+---

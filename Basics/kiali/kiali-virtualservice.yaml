@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: kiali-virtualservice
+  namespace: istio-system
+spec:
+  hosts:
+  - "kiali.magedu.com"
+  gateways:
+  - kiali-gateway
+  http:
+  - match:
+    - port: 20001
+    route:
+    - destination:
+        host: kiali
+        port:
+          number: 20001
+---

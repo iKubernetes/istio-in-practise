@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: proxy
+spec:
+  hosts:
+  - proxy
+  http:
+  - name: redirect
+    match:
+    - uri:
+        prefix: "/backend"
+    redirect:
+      uri: /
+      authority: backend
+      port: 8082
+  - name: default
+    route:
+    - destination:
+        host: proxy

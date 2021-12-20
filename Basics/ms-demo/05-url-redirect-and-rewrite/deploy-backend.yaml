@@ -1,0 +1,55 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: backend
+    version: v3.6
+  name: backendv36
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+      version: v3.6
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: backend
+        version: v3.6
+    spec:
+      containers:
+      - image: ikubernetes/gowebserver:v0.1.0
+        imagePullPolicy: IfNotPresent
+        name: gowebserver
+        env:
+        - name: "SERVICE_NAME"
+          value: "backend"
+        - name: "SERVICE_PORT"
+          value: "8082"
+        - name: "SERVICE_VERSION"
+          value: "v3.6"
+        ports:
+        - containerPort: 8082
+          name: web
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 50m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  ports:
+    - name: http-web
+      port: 8082
+      protocol: TCP
+      targetPort: 8082
+  selector:
+    app: backend
+    version: v3.6
+---

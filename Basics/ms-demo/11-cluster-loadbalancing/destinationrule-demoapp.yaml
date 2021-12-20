@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: demoapp
+spec:
+  host: demoapp
+  trafficPolicy:
+    loadBalancer:
+      simple: LEAST_CONN
+  subsets:
+  - name: v10
+    labels:
+      version: v1.0
+    trafficPolicy:
+      loadBalancer:
+        consistentHash:
+          httpHeaderName: X-User
+  - name: v11
+    labels:
+      version: v1.1
