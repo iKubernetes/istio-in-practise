@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: nginx-external
+spec:
+  host: nginx.magedu.com
+  trafficPolicy:
+    loadBalancer:
+      simple: RANDOM
+    connectionPool:
+      tcp:
+        maxConnections: 10000
+        connectTimeout: 10ms
+        tcpKeepalive:
+          time: 7200s
+          interval: 75s
+      http:
+        http2MaxRequests: 1000
+        maxRequestsPerConnection: 10
+    outlierDetection:
+      maxEjectionPercent: 50
+      consecutive5xxErrors: 5
+      interval: 2m
+      baseEjectionTime: 1m
+      minHealthPercent: 40

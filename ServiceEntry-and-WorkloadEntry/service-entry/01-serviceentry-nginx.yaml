@@ -1,0 +1,27 @@
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: nginx-external
+spec:
+  hosts:
+  - nginx.magedu.com
+  addresses:
+  - "172.29.1.201"
+  - "172.29.1.202"
+  - "172.29.1.203"
+  ports:
+  - number: 8091
+    name: http
+    protocol: HTTP
+  location: MESH_INTERNAL
+  resolution: STATIC
+  endpoints:
+  - address: "172.29.1.201"
+    ports:
+      http: 8091
+  - address: "172.29.1.202"
+    ports:
+      http: 8091
+  - address: "172.29.1.203"
+    ports:
+      http: 8091

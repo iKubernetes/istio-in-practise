@@ -1,0 +1,29 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: nginx-external
+spec:
+  hosts:
+  - nginx.magedu.com
+  http:
+  - name: falut-injection
+    match:
+    - headers:
+        X-Testing:
+          exact: "true"
+    route:
+    - destination:
+        host: nginx.magedu.com
+    fault:
+      delay:
+        percentage:
+          value: 5
+        fixedDelay: 2s
+      abort:
+        percentage:
+          value: 5
+        httpStatus: 555
+  - name: nginx-external
+    route:
+    - destination:
+        host: nginx.magedu.com
