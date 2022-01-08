@@ -1,0 +1,17 @@
+apiVersion: telemetry.istio.io/v1alpha1
+kind: Telemetry
+metadata:
+  name: namespace-metrics
+  namespace: default
+spec:
+  # no selector specified, applies to all workloads in the namespace
+  metrics:
+  - providers:
+    - name: prometheus
+    overrides:
+    # match clause left off matches all istio metrics, client and server
+    - tagOverrides:
+        request_method:
+          value: "request.method"
+        request_host:
+          value: "request.host"

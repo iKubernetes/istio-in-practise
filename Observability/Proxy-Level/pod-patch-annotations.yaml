@@ -1,0 +1,9 @@
+metadata:
+  annotations:
+    proxy.istio.io/config: |-
+      proxyStatsMatcher:
+        inclusionRegexps:
+        - ".*circuit_breakers.*"
+        inclusionPrefixes:
+        - "upstream_rq_retry"
+        - "upstream_cx"

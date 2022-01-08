@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client
+  annotations:
+    proxy.istio.io/config: |-
+      proxyStatsMatcher:
+        inclusionRegexps:
+        - ".*circuit_breakers.*"
+        inclusionPrefixes:
+        - "upstream_rq_retry"
+        - "upstream_cx"
+spec:
+  containers:
+  - image: ikubernetes/admin-box:v1.2
+    name: client
+    command: ['/bin/bash','-c','sleep 99999']
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never

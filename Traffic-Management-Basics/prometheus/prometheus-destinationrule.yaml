@@ -1,0 +1,11 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: prometheus
+  namespace: istio-system
+spec:
+  host: prometheus
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---

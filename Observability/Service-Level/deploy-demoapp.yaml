@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: demoappv10
+    version: v1.0
+  name: demoappv10
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demoapp
+      version: v1.0
+  template:
+    metadata:
+      labels:
+        app: demoapp
+        version: v1.0
+      annotations:
+        sidecar.istio.io/extraStatTags: request_method, request_host
+    spec:
+      containers:
+      - image: ikubernetes/demoapp:v1.0
+        imagePullPolicy: IfNotPresent
+        name: demoapp
+        env:
+        - name: "PORT"
+          value: "8080"
+        ports:
+        - containerPort: 8080
+          name: web
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 50m
+---
