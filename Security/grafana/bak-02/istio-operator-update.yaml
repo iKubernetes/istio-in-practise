@@ -1,0 +1,16 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+spec:
+  profile: demo
+  meshConfig:
+    extensionProviders:
+    - name: oauth2-proxy
+      envoyExtAuthzHttp:
+        service: oauth2-proxy.oauth2-proxy.svc.cluster.local
+        port: 4180
+        includeRequestHeadersInCheck:
+        - cookie
+        headersToUpstreamOnAllow:
+        - authorization
+        headersToDownstreamOnDeny:
+        - set-cookie

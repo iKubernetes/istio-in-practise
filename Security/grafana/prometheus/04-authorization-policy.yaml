@@ -1,0 +1,39 @@
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: prometheus-jwt
+  namespace: istio-system
+spec:
+  selector:
+     matchLabels:
+       app: prometheus
+  jwtRules:
+  - issuer: http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio
+    jwksUri: http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio/protocol/openid-connect/certs
+  - issuer: http://keycloak.magedu.com:8080/auth/realms/istio
+    jwksUri: http://keycloak.magedu.com:8080/auth/realms/istio/protocol/openid-connect/certs
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: prom-admin
+  namespace: istio-system
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        requestPrincipals: ["*"]
+    to:
+    - operation:
+        hosts:
+        - "prometheus.magedu.com"
+        methods:
+        - GET
+    when:
+    - key: request.auth.claims[email]
+      values:
+      - tom@magedu.com
+  selector:
+    matchLabels:
+      app: istio-ingressgateway

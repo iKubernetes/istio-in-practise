@@ -1,0 +1,17 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: istio-ingressgateway-audience
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      app: istio-ingressgateway
+  rules:
+  - when:
+    - key: request.auth.claims[iss]
+      values: ["http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio"]
+#  - when:
+#    - key: request.auth.audiences
+#      values:
+#      - DidgZydslq5Yvl2L1Pbwl22pVrxXtpWe

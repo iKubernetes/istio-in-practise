@@ -1,0 +1,33 @@
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: istio-ingressgateway
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      app: istio-ingressgateway
+  jwtRules:
+  - issuer: http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio
+    jwksUri: http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio/protocol/openid-connect/certs
+  - issuer: http://keycloak.magedu.com:8080/auth/realms/istio
+    jwksUri: http://keycloak.magedu.com:8080/auth/realms/istio/protocol/openid-connect/certs
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: ext-authz-oauth2-proxy
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      app: istio-ingressgateway
+  action: CUSTOM
+  provider:
+    # Extension provider configured when we installed Istio
+    name: oauth2-proxy
+  rules:
+  - to:
+    - operation:
+        hosts: ["*.magedu.com"]
+        notPaths: ["/auth/*"]

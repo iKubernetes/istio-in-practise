@@ -1,0 +1,99 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: oauth2-proxy
+  labels:
+    istio-injection: enabled
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: oauth2-proxy
+  namespace: oauth2-proxy
+stringData:
+  OAUTH2_PROXY_CLIENT_ID: istio-gateway
+  OAUTH2_PROXY_CLIENT_SECRET: DidgZydslq5Yvl2L1Pbwl22pVrxXtpWe
+  OAUTH2_PROXY_COOKIE_SECRET: zS_9jBaLqPD2CD9a3tg4ljzSEY4UQLa1f8JFOXo0Vwg=
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oauth2-proxy
+  namespace: oauth2-proxy
+spec:
+  selector:
+    app: oauth2-proxy
+  ports:
+  - name: http
+    port: 4180
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oauth2-proxy
+  namespace: oauth2-proxy
+spec:
+  selector:
+    matchLabels:
+      app: oauth2-proxy
+  template:
+    metadata:
+      labels:
+        app: oauth2-proxy
+    spec:
+      containers:
+      - name: oauth2-proxy
+        image: quay.io/oauth2-proxy/oauth2-proxy:v7.2.1
+        args:
+        - --provider=oidc
+        - --oidc-issuer-url=http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio
+        - --profile-url=http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio/protocol/openid-connect/userinfo
+        - --validate-url=http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio/protocol/openid-connect/userinfo      
+        - --set-authorization-header=true
+        - --http-address=0.0.0.0:4180
+        - --pass-host-header=true
+        - --reverse-proxy=true
+        - --auth-logging=true
+        - --cookie-httponly=true
+        - --cookie-refresh=4m
+        - --cookie-secure=false
+        - --email-domain="*"
+        - --pass-access-token=true
+        - --pass-authorization-header=true
+        - --request-logging=true
+        - --set-xauthrequest=true
+        - --silence-ping-logging=true
+        - --skip-provider-button=true
+        - --skip-auth-strip-headers=false
+        - --ssl-insecure-skip-verify=true
+        - --standard-logging=true
+        - --upstream="static://200"
+        - --whitelist-domain=".magedu.com,.cluster.local"
+        env:
+        - name: OAUTH2_PROXY_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: oauth2-proxy
+              key: OAUTH2_PROXY_CLIENT_ID
+        - name: OAUTH2_PROXY_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: oauth2-proxy
+              key: OAUTH2_PROXY_CLIENT_SECRET
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: oauth2-proxy
+              key: OAUTH2_PROXY_COOKIE_SECRET
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+        ports:
+        - containerPort: 4180
+          protocol: TCP
+        readinessProbe:
+          periodSeconds: 3
+          httpGet:
+            path: /ping
+            port: 4180

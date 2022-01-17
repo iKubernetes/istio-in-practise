@@ -1,0 +1,30 @@
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: demoapp
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: demoapp
+  jwtRules:
+  - issuer: "http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio"
+    jwksUri: "http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio/protocol/openid-connect/certs"
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: demoapp
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: demoapp
+  rules:
+  - from:
+    - source:
+        requestPrincipals: ["*"]
+    to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/*"]
