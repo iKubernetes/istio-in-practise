@@ -1,13 +1,14 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: prometheus-virtualservice
-  namespace: istio-system
+  name: proxy
+  namespace: default
 spec:
   hosts:
-  - "prometheus.magedu.com"
+  - "fe.magedu.com"
   gateways:
-  - prometheus-gateway
+  - istio-system/proxy-gateway
+  - mesh
   http:
   - match:
     - uri:
@@ -25,9 +26,10 @@ spec:
         host: oauth2-proxy.oauth2-proxy.svc.cluster.local
         port:
           number: 4180 
-  - route:
+  - name: default
+    route:
     - destination:
-        host: prometheus
+        host: proxy
         port:
-          number: 9090
+          number: 80 
 ---

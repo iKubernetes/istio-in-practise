@@ -11,12 +11,12 @@ metadata:
   name: oauth2-proxy
   namespace: oauth2-proxy
 stringData:
-  # change this to your Keycloak client id 
-  OAUTH2_PROXY_CLIENT_ID: istio-gateway
-  # change this to your Keycloak client secret 
-  OAUTH2_PROXY_CLIENT_SECRET: DidgZydslq5Yvl2L1Pbwl22pVrxXtpWe
+  # change this to your Keycloak Realm Client Id 
+  OAUTH2_PROXY_CLIENT_ID: ingress-gateway
+  # change this to your Keycloak Client Secret 
+  OAUTH2_PROXY_CLIENT_SECRET: vvMmMFMzk23E4mehcaSAELnOgbwhbEZa
   # Generate by command: openssl rand -base64 32 | tr -- '+/' '-_'
-  OAUTH2_PROXY_COOKIE_SECRET: zS_9jBaLqPD2CD9a3tg4ljzSEY4UQLa1f8JFOXo0Vwg=
+  OAUTH2_PROXY_COOKIE_SECRET: vEBMxbw7NXfaUIJR4klhdvB678GUPxWTd7tR9hq2m8w=
 ---
 apiVersion: v1
 kind: Service

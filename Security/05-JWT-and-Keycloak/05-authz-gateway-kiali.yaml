@@ -1,7 +1,7 @@
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: istio-ingressgateway
+  name: authz-kiali-ingressgw 
   namespace: istio-system
 spec:
   selector:
@@ -9,18 +9,6 @@ spec:
       app: istio-ingressgateway
   action: ALLOW
   rules:
-  - to:
-    - operation:
-        hosts: ["grafana.magedu.com"]
-        paths: ["/*"]
-    when:
-    - key: request.auth.claims[iss]
-      values: 
-      - "http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio"
-      - "http://keycloak.magedu.com:8080/auth/realms/istio"
-    - key: request.auth.claims[groups]
-      values: 
-      - "/grafana-admin"
   - to:
     - operation:
         hosts: ["kiali.magedu.com"]

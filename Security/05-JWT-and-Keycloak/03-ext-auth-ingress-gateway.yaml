@@ -10,11 +10,11 @@ spec:
   jwtRules:
   - issuer: http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio
     jwksUri: http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio/protocol/openid-connect/certs
+    audiences: ["ingress-gateway","istio-ingress-gateway"]
     # Forward JWT to Envoy Sidecar
     forwardOriginalToken: true
   - issuer: http://keycloak.magedu.com:8080/auth/realms/istio
     jwksUri: http://keycloak.magedu.com:8080/auth/realms/istio/protocol/openid-connect/certs
-    forwardOriginalToken: true
 ---
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy

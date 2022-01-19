@@ -1,9 +1,8 @@
----
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
-  name: grafana-gateway
-  namespace: istio-system
+  name: proxy-gateway
+  namespace: istio-system        # 要指定为ingress gateway pod所在名称空间
 spec:
   selector:
     app: istio-ingressgateway
@@ -13,7 +12,9 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "grafana.magedu.com"
+    - "fe.magedu.com"
+    tls:
+      httpsRedirect: true
   - port:
       number: 443
       name: https
@@ -22,5 +23,5 @@ spec:
       mode: SIMPLE
       credentialName: grafana-credential
     hosts:
-    - "grafana.magedu.com"
+    - "fe.magedu.com"
 ---

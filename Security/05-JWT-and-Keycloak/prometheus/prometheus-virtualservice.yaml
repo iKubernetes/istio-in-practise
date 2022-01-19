@@ -1,13 +1,13 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: grafana-virtualservice
+  name: prometheus-virtualservice
   namespace: istio-system
 spec:
   hosts:
-  - "grafana.magedu.com"
+  - "prometheus.magedu.com"
   gateways:
-  - grafana-gateway
+  - prometheus-gateway
   http:
   - match:
     - uri:
@@ -27,7 +27,6 @@ spec:
           number: 4180 
   - route:
     - destination:
-        host: grafana
+        host: prometheus
         port:
-          number: 3000
----
+          number: 9090
