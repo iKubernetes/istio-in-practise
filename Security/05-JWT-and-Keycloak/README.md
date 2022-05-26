@@ -24,3 +24,7 @@ Access Kiali and Prometheus
 ```bash
 kubectl apply -f 03-ext-auth-ingress-gateway.yaml
 ```
+
+随后，即可测试访问Kiali和Bookinfo等服务，验证其基于Keycloak的认证功能。
+
+
