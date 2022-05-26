@@ -101,6 +101,54 @@ spec:
 ---
 ```
 
+## Bookinfo Productpage
+
+### Certificate and Private Key 
+
+Create key and CSR
+```bash
+openssl req -out bookinfo.magedu.com.csr -newkey rsa:2048 -nodes -keyout bookinfo.magedu.com.key -subj "/CN=bookinfo.magedu.com/O=Bookinfo Project"
+openssl x509 -req -days 365 -CA magedu.com.crt -CAkey magedu.com.key -set_serial 30 -in bookinfo.magedu.com.csr -out bookinfo.magedu.com.crt
+```
+
+Create Secret
+```bash
+kubectl create -n istio-system secret tls bookinfo-credential --key=bookinfo.magedu.com.key --cert=bookinfo.magedu.com.crt
+```
+
+### Gateway
+Gateway Resrouce
+
+```
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: bookinfo-gateway
+  namespace: istio-system
+spec:
+  selector:
+    app: istio-ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "bookinfo.magedu.com"
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: bookinfo-credential
+    hosts:
+    - "bookinfo.magedu.com"
+---
+```
+
+
 ## frontend proxy
 
 ### Certificate and Private Key 
