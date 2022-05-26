@@ -14,7 +14,7 @@ stringData:
   # change this to your Keycloak Realm Client Id 
   OAUTH2_PROXY_CLIENT_ID: ingress-gateway
   # change this to your Keycloak Client Secret 
-  OAUTH2_PROXY_CLIENT_SECRET: vvMmMFMzk23E4mehcaSAELnOgbwhbEZa
+  OAUTH2_PROXY_CLIENT_SECRET: cv3nOxNlVdQ0waGblRtXV3H5EruoT1k4
   # Generate by command: openssl rand -base64 32 | tr -- '+/' '-_'
   OAUTH2_PROXY_COOKIE_SECRET: vEBMxbw7NXfaUIJR4klhdvB678GUPxWTd7tR9hq2m8w=
 ---

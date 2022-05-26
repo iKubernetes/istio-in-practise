@@ -9,11 +9,15 @@ spec:
       app: istio-ingressgateway
   action: ALLOW
   rules:
-  - when:
+  - to:
+    - operation:
+        hosts: ["bookinfo.magedu.com"]
+        paths: ["/*"]
+    when:
     - key: request.auth.claims[iss]
       values: 
       - "http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio"
       - "http://keycloak.magedu.com:8080/auth/realms/istio"
-    - key: request.auth.audiences
+    - key: request.auth.claims[roles]
       values: 
-      - "ingress-gateway"
+      - "bookinfo-users"

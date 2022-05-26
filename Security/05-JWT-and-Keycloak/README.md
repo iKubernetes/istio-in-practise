@@ -19,6 +19,8 @@ istioctl apply -f 02-istio-operator-update.yaml
 
 ### set Ingress Gateway ext authz
 
+Access Kiali and Prometheus 
+
 ```bash
 kubectl apply -f 03-ext-auth-ingress-gateway.yaml
 ```

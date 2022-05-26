@@ -1,0 +1,34 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: authz-fe-proxy
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: proxy
+  action: ALLOW
+  rules:
+  - to:
+    - operation:
+        hosts: ["fe.magedu.com","proxy.default.svc.cluster.local"]
+        paths: ["/*"]
+        methods: ["GET"]
+    when:
+    - key: request.auth.claims[iss]
+      values: 
+      - "http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio"
+      - "http://keycloak.magedu.com:8080/auth/realms/istio"
+  - to:
+    - operation:
+        hosts: ["fe.magedu.com","proxy.default.svc.cluster.local"]
+        paths: ["/livez","/readyz"]
+        methods: ["POST"]
+    when:
+    - key: request.auth.claims[iss]
+      values: 
+      - "http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio"
+      - "http://keycloak.magedu.com:8080/auth/realms/istio"
+    - key: request.auth.claims[groups]
+      values: 
+      - "/fe-proxy-admin"
