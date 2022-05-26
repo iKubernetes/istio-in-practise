@@ -1,0 +1,11 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: keycloak
+  namespace: keycloak
+spec:
+  host: keycloak
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---
