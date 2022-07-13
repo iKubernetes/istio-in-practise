@@ -1,0 +1,11 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: skywalking-dr
+  namespace: istio-system
+spec:
+  host: skywalking-ui
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---
