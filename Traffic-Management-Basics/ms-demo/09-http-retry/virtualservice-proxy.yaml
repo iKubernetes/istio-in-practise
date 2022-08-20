@@ -5,9 +5,11 @@ metadata:
 spec:
   hosts:
   - "fe.magedu.com"                     # 对应于gateways/proxy-gateway
+  - "proxy"
+  - "proxy.default.svc"
   gateways:
   - istio-system/proxy-gateway       # 相关定义仅应用于Ingress Gateway上
-  #- mesh
+  - mesh
   http:
   - name: default
     route:

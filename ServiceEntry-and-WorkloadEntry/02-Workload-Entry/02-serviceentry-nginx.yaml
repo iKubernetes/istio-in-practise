@@ -9,7 +9,8 @@ spec:
   - number: 80
     name: http
     protocol: HTTP
-  location: MESH_INTERNAL
+    targetPort: 8091
+  location: MESH_EXTERNAL
   resolution: STATIC
   workloadSelector:
     labels:
