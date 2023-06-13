@@ -8,7 +8,7 @@ spec:
     app: istio-ingressgateway
   servers:
   - port:
-      number: 80
+      number: 20001
       name: http-kiali
       protocol: HTTP
     hosts:

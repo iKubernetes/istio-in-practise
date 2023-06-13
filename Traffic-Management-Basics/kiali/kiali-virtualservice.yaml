@@ -10,7 +10,8 @@ spec:
   - kiali-gateway
   http:
   - match:
-    - port: 20001
+    - uri:
+        prefix: /
     route:
     - destination:
         host: kiali
