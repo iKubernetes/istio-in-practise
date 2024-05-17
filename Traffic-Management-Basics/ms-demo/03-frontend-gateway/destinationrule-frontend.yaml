@@ -1,0 +1,10 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: frontend
+spec:
+  host: frontend
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---

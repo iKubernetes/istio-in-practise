@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: demoapp
+spec:
+  hosts:
+  - demoapp
+  http:
+  - name: canary
+    match:
+    - uri:
+        prefix: /canary
+    rewrite:
+      uri: /
+    route:
+    - destination:
+        host: demoapp
+        subset: v2-canary
+    fault:
+      abort:
+        percentage:
+          value: 50
+        httpStatus: 555
+  - name: default
+    route:
+    - destination:
+        host: demoapp
+        subset: v2
+    fault:
+      delay:
+        percentage:
+          value: 50
+        fixedDelay: 3s

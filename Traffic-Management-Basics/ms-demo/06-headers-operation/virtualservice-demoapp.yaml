@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: demoapp
+spec:
+  hosts:
+  - demoapp
+  http:
+  - name: canary
+    match:
+    - headers:
+        x-canary: 
+          exact: "true"
+    route:
+    - destination:
+        host: demoapp
+        subset: v2-canary
+      headers:
+        request:
+          set:
+            User-Agent: Chrome
+        response:
+          add:
+            x-canary: "true"
+  - name: default
+    headers:
+      response:
+        add:
+          X-Envoy: test
+    route:
+    - destination:
+        host: demoapp
+        subset: v2

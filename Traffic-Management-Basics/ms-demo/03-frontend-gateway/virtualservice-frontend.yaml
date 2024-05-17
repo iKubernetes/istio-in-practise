@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: frontend
+spec:
+  hosts:
+  - "fe.magedu.com"
+  - "frontend.magedu.com"
+  gateways:
+  - frontend-gateway
+  #- mesh
+  http:
+  - name: default
+    match:
+    - uri: 
+        prefix: /
+    route:
+    - destination:
+        host: frontend
+        port:
+          number: 80

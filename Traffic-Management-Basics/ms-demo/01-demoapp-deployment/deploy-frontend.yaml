@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+      version: v2.0
+  template:
+    metadata:
+      labels:
+        app: frontend
+        version: v2.0
+    spec:
+      containers:
+        - env:
+          - name: BACKEND_URL
+            value: 'http://demoapp:8080'
+          image: ikubernetes/frontend:v2.0
+          imagePullPolicy: IfNotPresent
+          name: frontend
+          ports:
+            - containerPort: 5901
+              name: web
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 50m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  ports:
+    - name: http-80
+      port: 80
+      protocol: TCP
+      targetPort: 5901
+  selector:
+    app: frontend
+    version: v2.0
+---

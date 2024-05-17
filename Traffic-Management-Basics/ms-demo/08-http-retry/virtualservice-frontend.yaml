@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: frontend
+spec:
+  hosts:
+  - "fe.magedu.com"                     # 对应于gateways/proxy-gateway
+  - "frontend.magedu.com"                     # 对应于gateways/proxy-gateway
+  - "frontend"
+  - "frontend.default.svc"
+  gateways:
+  - istio-system/frontend-gateway       # 相关定义仅应用于Ingress Gateway上
+  - mesh
+  http:
+  - name: default
+    route:
+    - destination:
+        host: frontend
+    timeout: 1s
+    retries:
+      attempts: 5
+      perTryTimeout: 1s
+      retryOn: 5xx,connect-failure,refused-stream

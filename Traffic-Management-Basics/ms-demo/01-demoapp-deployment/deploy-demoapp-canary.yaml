@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: demoapp
+    version: v2-canary
+  name: demoapp-canary
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demoapp
+      version: v2-canary
+  template:
+    metadata:
+      labels:
+        app: demoapp
+        version: v2-canary
+    spec:
+      containers:
+      - image: ikubernetes/demoapp:v2
+        imagePullPolicy: IfNotPresent
+        name: demoapp
+        env:
+        - name: "PORT"
+          value: "8080"
+        - name: "VERSION"
+          value: "v2-canary"
+        ports:
+        - containerPort: 8080
+          name: web
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 50m
+---
