@@ -19,12 +19,14 @@ spec:
         - env:
           - name: BACKEND_URL
             value: 'http://demoapp:8080'
+          - name: PORT
+            value: '80'
           image: ikubernetes/frontend:v2.0
           imagePullPolicy: IfNotPresent
           name: frontend
           ports:
-            - containerPort: 5901
-              name: web
+            - containerPort: 80
+              name: http
               protocol: TCP
           resources:
             limits:
@@ -36,10 +38,10 @@ metadata:
   name: frontend
 spec:
   ports:
-    - name: http-80
+    - name: http
       port: 80
       protocol: TCP
-      targetPort: 5901
+      targetPort: 80
   selector:
     app: frontend
     version: v2.0
