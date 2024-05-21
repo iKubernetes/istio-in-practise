@@ -8,12 +8,12 @@ spec:
   selector:
     matchLabels:
       app: frontend
-      version: v2.0
+      version: v2.3
   template:
     metadata:
       labels:
         app: frontend
-        version: v2.0
+        version: v2.3
     spec:
       containers:
         - env:
@@ -21,7 +21,7 @@ spec:
             value: 'http://demoapp:8080'
           - name: PORT
             value: '80'
-          image: ikubernetes/frontend:v2.0
+          image: ikubernetes/frontend:v2.3.1
           imagePullPolicy: IfNotPresent
           name: frontend
           ports:
@@ -44,5 +44,4 @@ spec:
       targetPort: 80
   selector:
     app: frontend
-    version: v2.0
 ---

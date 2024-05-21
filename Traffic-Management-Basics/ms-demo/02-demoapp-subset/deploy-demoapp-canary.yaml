@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   labels:
     app: demoapp
-    version: v2-canary
+    version: v2.1-canary
   name: demoapp-canary
 spec:
   progressDeadlineSeconds: 600
@@ -12,22 +12,22 @@ spec:
   selector:
     matchLabels:
       app: demoapp
-      version: v2-canary
+      version: v2.1-canary
   template:
     metadata:
       labels:
         app: demoapp
-        version: v2-canary
+        version: v2.1-canary
     spec:
       containers:
-      - image: ikubernetes/demoapp:v2
+      - image: ikubernetes/demoapp:v2.1
         imagePullPolicy: IfNotPresent
         name: demoapp
         env:
         - name: "PORT"
           value: "8080"
         - name: "VERSION"
-          value: "v2-canary"
+          value: "v2.1-canary"
         ports:
         - containerPort: 8080
           name: web

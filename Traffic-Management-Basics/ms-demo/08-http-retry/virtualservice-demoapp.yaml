@@ -8,14 +8,20 @@ spec:
   http:
   - name: canary
     match:
-    - uri:
-        prefix: /canary
-    rewrite:
-      uri: /
+    - headers:
+        x-canary:
+          exact: "true"
     route:
     - destination:
         host: demoapp
         subset: v2-canary
+      headers:
+        request:
+          set:
+            User-Agent: wget
+        response:
+          add:
+            x-canary: "true"
     fault:
       abort:
         percentage:
@@ -30,4 +36,4 @@ spec:
       delay:
         percentage:
           value: 50
-        fixedDelay: 3s
+        fixedDelay: 5s

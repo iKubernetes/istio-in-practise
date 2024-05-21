@@ -4,12 +4,11 @@ metadata:
   name: frontend
 spec:
   hosts:
-  - "fe.magedu.com"                     # 对应于gateways/proxy-gateway
-  - "frontend.magedu.com"                     # 对应于gateways/proxy-gateway
+  - "fe.magedu.com"
+  - "frontend.magedu.com"
   - "frontend"
-  - "frontend.default.svc"
   gateways:
-  - istio-system/frontend-gateway       # 相关定义仅应用于Ingress Gateway上
+  - frontend-gateway
   - mesh
   http:
   - name: default

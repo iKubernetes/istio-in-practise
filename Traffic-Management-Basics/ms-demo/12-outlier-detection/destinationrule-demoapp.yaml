@@ -1,3 +1,6 @@
+# Author: MageEdu <mage@magedu.com>
+# Site: www.magedu.com
+#
 apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
@@ -26,7 +29,7 @@ spec:
   subsets:
   - name: v2
     labels:
-      version: v2.0
+      version: v2.1
   - name: v2-canary
     labels:
-      version: v2-canary
+      version: v2.1-canary

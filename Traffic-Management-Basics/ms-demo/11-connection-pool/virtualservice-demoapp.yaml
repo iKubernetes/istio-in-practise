@@ -8,15 +8,25 @@ spec:
   http:
   - name: canary
     match:
-    - uri:
-        prefix: /canary
-    rewrite:
-      uri: /
+    - headers:
+        x-canary: 
+          exact: "true"
     route:
     - destination:
         host: demoapp
         subset: v2-canary
+      headers:
+        request:
+          set:
+            User-Agent: wget
+        response:
+          add:
+            x-canary: "true"
   - name: default
+    headers:
+      response:
+        add:
+          X-Envoy: test
     route:
     - destination:
         host: demoapp

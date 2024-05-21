@@ -20,11 +20,11 @@ spec:
   subsets:
   - name: v2
     labels:
-      version: v2.0
+      version: v2.1
     trafficPolicy:
       loadBalancer:
         consistentHash:
-          httpHeaderName: X-User
+          httpHeaderName: x-user
   - name: v2-canary
     labels:
-      version: v2-canary
+      version: v2.1-canary

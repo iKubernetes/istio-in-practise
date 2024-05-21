@@ -1,6 +1,3 @@
-# Author: MageEdu <mage@magedu.com>
-# Site: www.magedu.com
-#
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
@@ -9,11 +6,13 @@ spec:
   hosts:
   - demoapp
   http:
-  - name: traffic-mirror
+  - name: weight-based-routing
     route:
     - destination:
         host: demoapp
         subset: v2
-    mirror:
-      host: demoapp
-      subset: v2-canary
+      weight: 90
+    - destination:
+        host: demoapp
+        subset: v2-canary
+      weight: 10
