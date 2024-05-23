@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: sleep
+  namespace: default
+spec:
+  workloadSelector:
+    labels:
+      app: sleep
+  egress:
+  - hosts:
+    - "./*"
+    - "istio-system/*"
