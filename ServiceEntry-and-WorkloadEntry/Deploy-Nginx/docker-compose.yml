@@ -1,12 +1,12 @@
 version: '3.3'
 
 services:
-  nginx2001:
-    image: nginx:1.20-alpine
+  nginx2501:
+    image: nginx:1.25-alpine
     volumes:
-      - ./html/nginx2001:/usr/share/nginx/html/
+      - ./html/nginx2501:/usr/share/nginx/html/
     networks:
-      envoymesh:
+      nginx_net:
         ipv4_address: 172.31.201.11
         aliases:
         - nginx
@@ -15,12 +15,12 @@ services:
     ports:
       - "172.29.1.201:8091:80"
 
-  nginx2002:
-    image: nginx:1.20-alpine
+  nginx2502:
+    image: nginx:1.25-alpine
     volumes:
-      - ./html/nginx2002:/usr/share/nginx/html/
+      - ./html/nginx2502:/usr/share/nginx/html/
     networks:
-      envoymesh:
+      nginx_net:
         ipv4_address: 172.31.201.12
         aliases:
         - nginx
@@ -29,12 +29,12 @@ services:
     ports:
       - "172.29.1.202:8091:80"
 
-  nginx2101:
-    image: nginx:1.21-alpine
+  nginx2601:
+    image: nginx:1.26-alpine
     volumes:
-      - ./html/nginx2101:/usr/share/nginx/html/
+      - ./html/nginx2601:/usr/share/nginx/html/
     networks:
-      envoymesh:
+      nginx_net:
         ipv4_address: 172.31.201.13
         aliases:
         - nginx
@@ -45,7 +45,7 @@ services:
       - "172.29.1.203:8091:80"
 
 networks:
-  envoymesh:
+  nginx_net:
     driver: bridge
     ipam:
       config:

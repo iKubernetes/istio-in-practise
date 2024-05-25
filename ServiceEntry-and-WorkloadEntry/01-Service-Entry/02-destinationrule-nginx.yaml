@@ -7,7 +7,7 @@ spec:
   trafficPolicy:
     loadBalancer:
       consistentHash:
-        httpHeaderName: X-User
+        httpHeaderName: x-user
     connectionPool:
       tcp:
         maxConnections: 10000

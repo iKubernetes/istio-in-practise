@@ -5,12 +5,14 @@ metadata:
 spec:
   hosts:
   - nginx.magedu.com
+  - nginx
   addresses:
   - "172.29.1.201"
   - "172.29.1.202"
   - "172.29.1.203"
+  # Service Port
   ports:
-  - number: 8091
+  - number: 80
     name: http
     protocol: HTTP
   location: MESH_EXTERNAL

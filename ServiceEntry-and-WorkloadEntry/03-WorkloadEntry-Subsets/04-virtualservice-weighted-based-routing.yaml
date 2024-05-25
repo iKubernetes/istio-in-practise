@@ -5,25 +5,14 @@ metadata:
 spec:
   hosts:
   - nginx.magedu.com
-  gateways:
-  - istio-system/egress
-  - mesh
   http:
-  - match:
-    - gateways:
-      - mesh
-    route:
-    - destination:
-        host: istio-egressgateway.istio-system.svc.cluster.local
-  - match:
-    - gateways:
-      - istio-system/egress
+  - name: default
     route:
     - destination:
         host: nginx.magedu.com
-        subset: v21
+        subset: v26
       weight: 5
     - destination:
         host: nginx.magedu.com
-        subset: v20
+        subset: v25
       weight: 95

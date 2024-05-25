@@ -16,6 +16,10 @@ spec:
         app: client
         version: v1.2
     spec:
+      hostAliases:
+      - hostnames: ["nginx.magedu.com", "nginx"]
+        ip: '172.29.1.201'
       containers:
       - image: ikubernetes/admin-box:v1.2
         name: admin-box
+        command: ['/bin/sh', '-c', 'sleep INFINITE']

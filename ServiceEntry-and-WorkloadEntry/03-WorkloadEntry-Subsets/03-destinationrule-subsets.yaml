@@ -24,10 +24,10 @@ spec:
       baseEjectionTime: 1m
       minHealthPercent: 40
   subsets:
-  - name: v20
+  - name: v25
     labels:
-      version: "v1.20"
-  - name: v21
+      version: "v1.25"
+  - name: v26
     labels:
-      version: "v1.21"
+      version: "v1.26"
 ---

@@ -9,12 +9,12 @@ spec:
   - name: falut-injection
     match:
     - headers:
-        X-Canary:
+        x-canary:
           exact: "true"
     route:
     - destination:
         host: nginx.magedu.com
-        subset: v21
+        subset: v26
     fault:
       delay:
         percentage:
@@ -24,7 +24,7 @@ spec:
     route:
     - destination:
         host: nginx.magedu.com
-        subset: v20
+        subset: v25
     fault:
       abort:
         percentage:

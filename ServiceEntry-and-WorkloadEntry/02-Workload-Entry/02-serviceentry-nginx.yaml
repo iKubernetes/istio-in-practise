@@ -11,6 +11,7 @@ spec:
     protocol: HTTP
     targetPort: 8091
   location: MESH_EXTERNAL
+  # NONE, STATIC, DNS, DNS_ROUND_ROBIN
   resolution: STATIC
   workloadSelector:
     labels:

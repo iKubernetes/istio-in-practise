@@ -11,5 +11,5 @@ ServiceEntry、WorkloadEntry和Egress Gateway使用示例。
 于启动的专用测试客户端Pod的交互式的接口中运行如下命令
 
 ```bash
-v20=0; v21=0; while true; do if curl -s nginx.magedu.com | grep "^Nginx 20.*" &> /dev/null; then let v20++; else let v21++; fi; echo ${v20}:${v21}; sleep 0.0$RANDOM; done
+v25=0; v26=0; while true; do if curl -s nginx.magedu.com | grep "^Nginx 25.*" &> /dev/null; then let v25++; else let v26++; fi; echo ${v25}:${v26}; sleep 0.0$RANDOM; done
 ```
