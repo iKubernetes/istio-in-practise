@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: client
+  name: client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+      version: v1.2
+  template:
+    metadata:
+      labels:
+        app: client
+        version: v1.2
+    spec:
+      hostAliases:
+      - hostnames: ["nginx.magedu.com", "nginx"]
+        ip: '172.29.1.201'
+      containers:
+      - image: ikubernetes/admin-box:v1.2
+        name: admin-box
+        command: ['/bin/sh', '-c', 'sleep INFINITE']
