@@ -1,0 +1,16 @@
+# 配置禁用 frontend 服务的入站访问日志
+#
+apiVersion: telemetry.istio.io/v1alpha1
+kind: Telemetry
+metadata:
+  name: disable-frontend-logging
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  accessLogging:
+  - providers:
+    - name: otel
+    match:
+      mode: SERVER
+    disabled: true
