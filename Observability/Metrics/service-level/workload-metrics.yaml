@@ -1,0 +1,18 @@
+apiVersion: telemetry.istio.io/v1
+kind: Telemetry
+metadata:
+  name: workload-metrics
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+      version: v2.3
+  metrics:
+  - providers:
+    - name: prometheus
+    overrides:
+    - match:
+        metric: ALL_METRICS
+        mode: CLIENT
+      disabled: true

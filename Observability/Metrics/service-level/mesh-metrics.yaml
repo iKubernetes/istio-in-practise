@@ -1,0 +1,24 @@
+apiVersion: telemetry.istio.io/v1
+kind: Telemetry
+metadata:
+  name: metrics-mesh-default
+  namespace: istio-system
+spec:
+  # no selector specified, applies to all workloads in the namespace
+  metrics:
+  - providers:
+    - name: prometheus
+    overrides:
+    - match:
+        metric: REQUEST_COUNT
+      tagOverrides:
+        destination_port:
+          value: "string(destination.port)"
+          operation: UPSERT
+        request_host:
+          value: "request.host"
+          operation: UPSERT
+    # match clause left off matches all istio metrics, client and server
+    - tagOverrides:
+        connection_security_policy:
+          operation: REMOVE
