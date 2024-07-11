@@ -15,20 +15,28 @@ spec:
     - match:
         metric: REQUEST_COUNT
       tagOverrides:
-        response_code:
+        source_principal:
+          operation: REMOVE
+        destination_principal:
           operation: REMOVE
     - match:
         metric: REQUEST_DURATION
       tagOverrides:
-        response_code:
+        source_principal:
+          operation: REMOVE
+        destination_principal:
           operation: REMOVE
     - match:
         metric: REQUEST_SIZE
       tagOverrides:
-        response_code:
+        source_principal:
+          operation: REMOVE
+        destination_principal:
           operation: REMOVE
     - match:
         metric: RESPONSE_SIZE
       tagOverrides:
-        response_code:
+        source_principal:
+          operation: REMOVE
+        destination_principal:
           operation: REMOVE

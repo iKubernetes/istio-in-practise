@@ -16,3 +16,13 @@ spec:
         metric: ALL_METRICS
         mode: CLIENT
       disabled: true
+    - match:
+        metric: ALL_METRICS
+        mode: SERVER
+      tagOverrides:
+        destination_port:
+          operation: REMOVE
+        request_method:
+          operation: UPSERT
+          value: "request.method"
+
