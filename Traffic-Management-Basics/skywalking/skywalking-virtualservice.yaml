@@ -16,5 +16,5 @@ spec:
     - destination:
         host: skywalking-ui
         port:
-          number: 80
+          number: 8080
 ---
