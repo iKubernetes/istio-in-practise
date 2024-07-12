@@ -1,6 +1,6 @@
 # 禁用 demoapp 服务的访问日志
 #
-apiVersion: telemetry.istio.io/v1alpha1
+apiVersion: telemetry.istio.io/v1
 kind: Telemetry
 metadata:
   name: disable-demoapp-logging

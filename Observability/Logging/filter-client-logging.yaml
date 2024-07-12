@@ -1,6 +1,6 @@
 # 通过 CEL 表达式过滤访问日志, 只有响应码大于等于 500 时，以下配置才显示访问日志
 #
-apiVersion: telemetry.istio.io/v1alpha1
+apiVersion: telemetry.istio.io/v1
 kind: Telemetry
 metadata:
   name: filter-client-logging
