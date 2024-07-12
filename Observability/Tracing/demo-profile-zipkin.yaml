@@ -1,0 +1,53 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+spec:
+  components:
+    base:
+      enabled: true
+    egressGateways:
+    - enabled: true
+      name: istio-egressgateway
+    ingressGateways:
+    - enabled: true
+      name: istio-ingressgateway
+    pilot:
+      enabled: true
+  hub: docker.io/istio
+  profile: demo
+  tag: 1.22.2
+  values:
+    defaultRevision: ""
+    gateways:
+      istio-egressgateway: {}
+      istio-ingressgateway: {}
+    global:
+      configValidation: true
+      istioNamespace: istio-system
+    profile: demo
+  meshConfig:
+    #accessLogFile: /dev/stdout
+    #accessLogEncoding: JSON
+    enableTracing: true
+    defaultConfig:
+      tracing: {} # disabled MeshConfig tracing options
+    extensionProviders:
+    - name: otel
+      envoyOtelAls:
+        service: opentelemetry-collector.istio-system.svc.cluster.local
+        port: 4317
+        logFormat:
+          labels:
+            pod: "%ENVIRONMENT(POD_NAME)%"
+            namespace: "%ENVIRONMENT(POD_NAMESPACE)%"
+            cluster: "%ENVIRONMENT(ISTIO_META_CLUSTER_ID)%"
+            mesh: "%ENVIRONMENT(ISTIO_META_MESH_ID)%"
+    # add zipkin provider
+    - name: zipkin
+      zipkin:
+        service: zipkin.istio-system.svc.cluster.local
+        port: 9411
+    defaultProviders:
+      metrics:
+      - prometheus
+      tracing:
+      - zipkin
