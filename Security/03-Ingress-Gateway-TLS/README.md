@@ -1,28 +1,31 @@
 # Ingress Gateway TLS
 
+配置Ingress Gateway上对外发布的服务，以https协议提供服务的示例。
+
 ## Grafana
 
 ### Certificate and Private Key 
 
-Create CA Key and Certificate
+创建CA Key和CA Certificate。
 ```bash
 mkdir certs/ && cd certs/
 openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -subj '/O=MageEdu Inc./CN=magedu.com' -keyout magedu.com.key -out magedu.com.crt
 ```
 
-Create key and CSR
+为Grafana服务创建私钥和CSR。
+
 ```bash
 openssl req -out grafana.magedu.com.csr -newkey rsa:2048 -nodes -keyout grafana.magedu.com.key -subj "/CN=grafana.magedu.com/O=grafana organization"
 openssl x509 -req -days 365 -CA magedu.com.crt -CAkey magedu.com.key -set_serial 0 -in grafana.magedu.com.csr -out grafana.magedu.com.crt
 ```
 
-Create Secret
+创建TLS Secret，以提供证书给到Ingress Gateway Pod。
 ```bash
 kubectl create secret tls grafana-credential --key=grafana.magedu.com.key --cert=grafana.magedu.com.crt -n istio-system 
 ```
 
 ### Gateway
-Gateway Resrouce
+Gateway Resource示例。
 
 ```
 ---

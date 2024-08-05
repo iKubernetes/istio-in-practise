@@ -1,4 +1,4 @@
-apiVersion: networking.istio.io/v1beta1
+apiVersion: networking.istio.io/v1
 kind: DestinationRule
 metadata:
   name: demoapp
@@ -10,9 +10,9 @@ spec:
     tls:
       mode: DISABLE
   subsets:
-  - name: v10
+  - name: v2
     labels:
-      version: v1.0
-  - name: v11
+      version: v2.1
+  - name: v2-canary
     labels:
-      version: v1.1
+      version: v2.1-canary
