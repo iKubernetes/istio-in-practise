@@ -12,6 +12,7 @@ spec:
       protocol: HTTP
     hosts:
     - "fe.magedu.com"
+    - "frontend.magedu.com"
     tls:
       httpsRedirect: true
   - port:
@@ -20,7 +21,8 @@ spec:
       protocol: HTTPS
     tls:
       mode: SIMPLE
-      credentialName: grafana-credential
+      credentialName: fe-credential
     hosts:
     - "fe.magedu.com"
+    - "frontend.magedu.com"
 ---

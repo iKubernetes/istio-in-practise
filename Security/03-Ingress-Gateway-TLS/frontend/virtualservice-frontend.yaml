@@ -1,20 +1,20 @@
 apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
-  name: proxy
+  name: frontend
   namespace: default
 spec:
   hosts:
   - "fe.magedu.com"
   - "frontend.magedu.com"
   gateways:
-  - istio-system/proxy-gateway
+  - frontend-gateway
   - mesh
   http:
   - name: default
     route:
     - destination:
-        host: proxy
+        host: frontend
         port:
           number: 80 
 ---
