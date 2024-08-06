@@ -28,3 +28,9 @@ helm install keycloak oci://registry-1.docker.io/bitnamicharts/keycloak -f deplo
 
 本示例提供了基于Istio API开放Keycloak UI至集群外部的资源对象。需要注意的是，Keycloak自身提供了HTTPS服务，国此，服务发布需要基于SSL Paththrough的方式进行。
 
+```bash
+kubectl apply -f istio/
+```
+
+
+
