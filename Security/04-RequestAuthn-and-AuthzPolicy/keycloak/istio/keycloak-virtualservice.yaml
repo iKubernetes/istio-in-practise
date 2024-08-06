@@ -1,4 +1,5 @@
-apiVersion: networking.istio.io/v1beta1
+---
+apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
   name: keycloak-virtualservice
@@ -7,14 +8,15 @@ spec:
   hosts:
   - "keycloak.magedu.com"
   gateways:
-  - "istio-system/keycloak-gateway"
-  http:
+  - "keycloak-gateway"
+  tls:
   - match:
-    - uri:
-        prefix: /
+    - port: 443
+      sniHosts:
+      - "keycloak.magedu.com"
     route:
     - destination:
         host: keycloak
         port:
-          number: 8080
+          number: 443
 ---

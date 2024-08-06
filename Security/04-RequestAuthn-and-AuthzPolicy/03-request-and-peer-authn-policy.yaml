@@ -1,4 +1,4 @@
-apiVersion: security.istio.io/v1beta1
+apiVersion: security.istio.io/v1
 kind: RequestAuthentication
 metadata:
   name: demoapp
@@ -8,10 +8,10 @@ spec:
     matchLabels:
       app: demoapp
   jwtRules:
-  - issuer: "http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio"
-    jwksUri: "http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio/protocol/openid-connect/certs"
+  - issuer: "http://keycloak.keycloak.svc.cluster.local/realms/istio"
+    jwksUri: "http://keycloak.keycloak.svc.cluster.local/realms/istio/protocol/openid-connect/certs"
 ---
-apiVersion: security.istio.io/v1beta1
+apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
   name: demoapp
@@ -20,24 +20,24 @@ spec:
   selector:
     matchLabels:
       app: demoapp
+  action: ALLOW
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/default/sa/default"]
-    - source:
         namespaces: ["default", "dev", "istio-system"]
+    - source:
+        principals: ["cluster.local/ns/default/sa/default"]
     to:
     - operation:
         methods: ["GET"]
-        paths: ["/*"]
   - from:
     - source:
-        requestPrincipals: ["*"]
-        principals: ["cluster.local/ns/default/sa/default"]
+        requestPrincipals: ["*"] 
     to:
     - operation:
         methods: ["POST"]
         paths: ["/livez", "/readyz"]
     when:
     - key: request.auth.claims[iss]
-      values: ["http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/istio"]
+      values: ["http://keycloak.keycloak.svc.cluster.local/realms/istio"]
+---

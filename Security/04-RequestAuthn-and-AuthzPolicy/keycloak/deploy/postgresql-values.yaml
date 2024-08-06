@@ -1,0 +1,84 @@
+global:
+  defaultStorageClass: ""
+  storageClass: ""
+
+image:
+  registry: docker.io
+  repository: bitnami/postgresql
+  tag: 16.3.0-debian-12-r23
+  digest: ""
+  pullPolicy: IfNotPresent
+
+auth:
+  enablePostgresUser: true
+  postgresPassword: "MageEdu.com"
+  username: "kcuser"
+  password: "kcpassword"
+  database: "keycloak"
+  replicationUsername: repl_user
+  replicationPassword: repl_password
+  existingSecret: ""
+  secretKeys:
+    adminPasswordKey: postgres-password
+    userPasswordKey: password
+    replicationPasswordKey: replication-password
+
+#architecture: standalone
+architecture: replication
+
+containerPorts:
+  postgresql: 5432
+
+postgresqlDataDir: /bitnami/postgresql/data
+
+primary:
+  name: primary
+  configuration: ""
+  pgHbaConfiguration: ""
+  existingConfigmap: ""
+  existingExtendedConfigmap: ""
+
+  service:
+    type: ClusterIP
+    ports:
+      postgresql: 5432
+    nodePorts:
+      postgresql: ""
+    clusterIP: ""
+    externalTrafficPolicy: Cluster
+
+  persistence:
+    enabled: true
+    volumeName: "data"
+    existingClaim: ""
+    mountPath: /bitnami/postgresql
+    storageClass: "openebs-hostpath"
+    accessModes:
+      - ReadWriteOnce
+    size: 10Gi
+
+## @section PostgreSQL read only replica parameters (only used when `architecture` is set to `replication`)
+##
+readReplicas:
+  name: read
+  replicaCount: 1
+  extendedConfiguration: ""
+
+  service:
+    type: ClusterIP
+    ports:
+      postgresql: 5432
+    nodePorts:
+      postgresql: ""
+    clusterIP: ""
+    loadBalancerIP: ""
+    externalTrafficPolicy: Cluster
+  persistence:
+    enabled: true
+    existingClaim: ""
+    mountPath: /bitnami/postgresql
+    subPath: ""
+    storageClass: "openebs-hostpath"
+    accessModes:
+      - ReadWriteOnce
+    size: 10Gi
