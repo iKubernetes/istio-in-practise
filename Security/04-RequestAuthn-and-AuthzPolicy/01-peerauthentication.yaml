@@ -1,5 +1,5 @@
 ---
-apiVersion: security.istio.io/v1beta1
+apiVersion: security.istio.io/v1
 kind: PeerAuthentication
 metadata:
   name: peerauthn-default
@@ -8,7 +8,7 @@ spec:
   mtls:
     mode: STRICT
 ---
-#apiVersion: security.istio.io/v1beta1
+#apiVersion: security.istio.io/v1
 #kind: PeerAuthentication
 #metadata:
 #  name: peerauthn-demoapp
