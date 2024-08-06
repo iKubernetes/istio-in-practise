@@ -1,6 +1,7 @@
 # 部署Keycloak
 
 
+
 ## 使用helm部署Keycloak
 
 本示例将基于helm工具来部署KeyCloak。
@@ -10,7 +11,7 @@
 KeyCloak依赖于PostgreSQL。本示例将会在keycloak名称空间中部署主从复制功能的PostgreSQL数据库。
 
 ```bash
-helm install postgresql oci://registry-1.docker.io/bitnamicharts/postgresql -f postgresql-values.yaml -n keycloak --create-namespace
+helm install postgresql oci://registry-1.docker.io/bitnamicharts/postgresql -f deploy/postgresql-values.yaml -n keycloak --create-namespace
 ```
 
 ### 部署Keycloak
@@ -18,7 +19,7 @@ helm install postgresql oci://registry-1.docker.io/bitnamicharts/postgresql -f p
 本示例将会在keycloak名称空间中部署面向生产环境的Keycloak，这会强制要求启用HTTPS服务，helm在其部署过程中支持自动创建一个测试使用的自签证书。
 
 ```bash
-helm install keycloak oci://registry-1.docker.io/bitnamicharts/keycloak -f keycloak-values.yaml -n keycloak --create-namespace
+helm install keycloak oci://registry-1.docker.io/bitnamicharts/keycloak -f deploy/keycloak-values.yaml -n keycloak --create-namespace
 ```
 
 
