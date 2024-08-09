@@ -18,6 +18,7 @@ spec:
         methods: ["GET"]
   - from:
     - source:
+        # 仅身份信息为ServiceAccount/client的客户端可发起POST请求
         principals:
         - cluster.local/ns/default/sa/client
     to:
