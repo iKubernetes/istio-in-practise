@@ -1,0 +1,25 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: demoapp
+  namespace: default
+spec:
+  targetRefs:
+  - kind: Service
+    group: ""
+    name: demoapp
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces: ["default", "istio-system"]
+    to:
+    - operation:
+        methods: ["GET"]
+  - from:
+    - source:
+        principals:
+        - cluster.local/ns/default/sa/client
+    to:
+    - operation:
+        methods: ["GET", "POST"]
